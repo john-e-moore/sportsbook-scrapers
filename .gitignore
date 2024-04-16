@@ -1,0 +1,9 @@
+venv/
+data/
+tmp/
+*__pycache__*
+api.yml
+config.yml
+pat.txt
+*example.py
+test_file.csv

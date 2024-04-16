@@ -1,0 +1,12 @@
+aws:
+  region:
+  bronze_draftkings_s3_bucket:
+  bronze_draftkings_s3_key:
+webscraping:
+  draftkings:
+    url:
+    sleep:
+  fanduel:
+    url:
+    sleep:
+  

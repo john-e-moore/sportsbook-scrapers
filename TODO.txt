@@ -1,0 +1,6 @@
+* Set up bronze logic using vanilla Python + requests
+* Write tests
+* Write handler.py
+* Write deploy script
+* Deploy lambda function
+* Figure out Fanduel API
