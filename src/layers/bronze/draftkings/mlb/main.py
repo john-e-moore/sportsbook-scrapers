@@ -1,4 +1,9 @@
-import json, yaml, requests, time, sys
+import json
+import yaml
+import requests
+import time
+import random
+import sys
 from datetime import datetime
 from layers.bronze.bronze_utils import BronzeUtility
 
@@ -20,7 +25,8 @@ def main():
     bucket = aws_config['bucket']
     key = aws_config['bronze_draftkings_s3_key']
     url_template = webscraping_config[1]['draftkings']['url_template']
-    sleep_secs = webscraping_config[1]['draftkings']['sleep']
+    sleep_min = webscraping_config[1]['draftkings']['sleep_min']
+    sleep_max = webscraping_config[1]['draftkings']['sleep_max']
 
     # Load API schema
     api_path = "layers/bronze/draftkings/api.yml"
@@ -30,8 +36,6 @@ def main():
     # Request data for each subcategory
     data_dir = webscraping_config[3]['data-directory']
     headers = webscraping_config[0]['headers']
-    print(headers)
-    #sys.exit()
     for category in api_mlb['categories']:
         category_id = category['id']
         print(f"Category name: {category['name']}")
@@ -45,7 +49,6 @@ def main():
                 category_id=category_id, 
                 subcategory_id=subcategory_id)
             print(f"URL: {url}")
-            print(f"Headers: {headers}")
             # Fetch data
             try:
                 response = requests.get(
@@ -58,21 +61,22 @@ def main():
             # Write data
             if response.status_code == 200:
                 timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-                with open(f'{data_dir}/{subcategory_name}_{timestamp}.json', 'w') as f:
+                BronzeUtility.upload_obj_s3(
+                    bucket=bucket,
+                    key=f'{key}/dk-{subcategory_name}_{timestamp}.json',
+                    obj=response.text
+                )
+                """
+                with open(f'{data_dir}/dk-{subcategory_name}_{timestamp}.json', 'w') as f:
                     json.dump(response.text, f)
+                print("Successfully wrote JSON file.")
+                """
             else:
                 print("Error fetching data.")
-            print("Sleeping for 3 seconds...")
-            time.sleep(3)
-
-    
-
-    # Construct url
-    # Request then sleeping for 3s
-    
-
-    # Write data to s3
-    # <subcategory>_<timestamp>.json
+            # Sleep
+            sleep_secs = random.randint(sleep_min, sleep_max)
+            print(f"Sleeping for {sleep_secs} seconds...")
+            time.sleep(sleep_secs)
 
 if __name__ == '__main__':
     main()
