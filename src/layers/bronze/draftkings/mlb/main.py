@@ -1,9 +1,7 @@
-import json
 import yaml
 import requests
 import time
 import random
-import sys
 from datetime import datetime
 from layers.bronze.bronze_utils import BronzeUtility
 
@@ -34,7 +32,7 @@ def main():
     eventgroup_mlb = api_mlb['id']
 
     # Request data for each subcategory
-    data_dir = webscraping_config[3]['data-directory']
+    #data_dir = webscraping_config[3]['data-directory']
     headers = webscraping_config[0]['headers']
     for category in api_mlb['categories']:
         category_id = category['id']
