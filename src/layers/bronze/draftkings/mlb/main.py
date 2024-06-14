@@ -3,7 +3,7 @@ import requests
 import time
 import random
 from datetime import datetime
-from layers.bronze.bronze_utils import BronzeUtility
+from common.s3_utils import S3Utility
 
 def load_yml(filepath: str) -> dict:
     """Load config from yml file."""
@@ -59,7 +59,7 @@ def main():
             # Write data
             if response.status_code == 200:
                 timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-                BronzeUtility.upload_obj_s3(
+                S3Utility.upload_obj_s3(
                     bucket=bucket,
                     key=f'{key}/dk-{subcategory_name}_{timestamp}.json',
                     obj=response.text
