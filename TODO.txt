@@ -1,6 +1,7 @@
-* Set up bronze logic using vanilla Python + requests
-* Write tests
 * Write handler.py
 * Write deploy script
 * Deploy lambda function
+* Silver: extract necessary info from JSON, perform calculations for vig-free and apply statistical functions, write to CSV
+ * Webserver monitors the silver folder and updates display w/ new data
+* Gold: daily roll-up into time series
 * Figure out Fanduel API
