@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Config variables
-FUNCTION_NAME="dkMlbBronze"
-ZIP_FILE="dkMlbBronze.zip"
+FUNCTION_NAME="test"
+ZIP_FILE="dkMlbTest.zip"
 PROJECT_DIR="$(pwd)"
 SOURCE_DIR="${PROJECT_DIR}/src/"
 TESTS_DIR="${PROJECT_DIR}/src/tests/"
@@ -32,10 +32,8 @@ echo "Packaging function and dependencies..."
 cd $VENV_DIR/lib/python3.*/site-packages/
 zip -r9 $PROJECT_DIR/$ZIP_FILE .
 # Package source code
-cd $SOURCE_DIR
-zip -r $PROJECT_DIR/$ZIP_FILE common
-zip $PROJECT_DIR/$ZIP_FILE layers/__init__.py
-zip -r $PROJECT_DIR/$ZIP_FILE layers/bronze/draftkings
+cd $PROJECT_DIR
+zip -r $PROJECT_DIR/$ZIP_FILE example.py
 
 # Print the size of the newly made zip file in MB
 cd $PROJECT_DIR
