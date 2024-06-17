@@ -14,7 +14,6 @@ def load_yml(filepath: str) -> dict:
         print(f"Error in configuration file:\n{exc}")
 
 def main():
-
     # Load config
     config_path = "common/config.yml"
     config = load_yml(config_path)
@@ -46,15 +45,18 @@ def main():
                 eventgroup_id=eventgroup_mlb, 
                 category_id=category_id, 
                 subcategory_id=subcategory_id)
-            print(f"URL: {url}")
+            print(f"Request URL: {url}")
+            print(f"Request headers: {headers}")
             # Fetch data
+            print("Fetching data...")
             try:
                 response = requests.get(
                     url=url,
                     headers=headers
                 )
+                print(f"Status code: {response.status_code}")
             except Exception as e:
-                print(response.status_code)
+                print(f"Status code: {response.status_code}")
                 print(e)
             # Write data
             if response.status_code == 200:
